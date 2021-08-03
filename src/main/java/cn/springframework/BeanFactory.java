@@ -1,26 +1,13 @@
 package cn.springframework;
 
-import java.util.concurrent.ConcurrentHashMap;
-
 /**
- * 创建bean工厂
+ * bean工厂
  * jackson
- * 2021年08月03日23:51:54
+ * 2021年08月04日00:39:07
  */
-public class BeanFactory {
-
-    //使用线程安全的ConcurrentHashMap
-    private ConcurrentHashMap<String, BeanDefinition> beanDefinitionMap =
-            new ConcurrentHashMap<String,BeanDefinition>();
-
+public interface BeanFactory {
 
     //获取bean
-    public Object getBean(String name) {
-        return beanDefinitionMap.get(name).getBean();
-    }
+    Object getBean(String name);
 
-    //注册bean
-    public void registerBeanDefinition(String name, BeanDefinition beanDefinition) {
-        beanDefinitionMap.put(name, beanDefinition);
-    }
 }
