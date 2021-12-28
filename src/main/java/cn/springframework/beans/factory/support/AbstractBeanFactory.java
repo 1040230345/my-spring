@@ -12,6 +12,11 @@ import cn.springframework.beans.factory.config.BeanDefinition;
 public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry
         implements BeanFactory {
 
+    /**
+     * 从beanFactory继承来的需要实现获取bean的方法
+     * @param name
+     * @return
+     */
     @Override
     public Object getBean(String name){
         Object bean = getSingleton(name);
