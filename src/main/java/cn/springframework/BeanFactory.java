@@ -10,4 +10,6 @@ public interface BeanFactory {
     //获取bean
     Object getBean(String name);
 
+    Object getBean(String name,Object... arg);
+
 }
