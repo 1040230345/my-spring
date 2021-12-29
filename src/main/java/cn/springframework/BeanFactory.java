@@ -8,8 +8,8 @@ package cn.springframework;
 public interface BeanFactory {
 
     //获取bean
-    <T>T getBean(String name);
+    Object getBean(String name);
 
-    <T>T getBean(String name,Object... arg);
+    Object getBean(String name,Object... arg);
 
 }

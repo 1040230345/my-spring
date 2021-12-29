@@ -12,16 +12,16 @@ import java.lang.reflect.InvocationTargetException;
 public class SimpleInstantiationStrategy implements InstantiationStrategy{
 
     @Override
-    public <T> Object instantiate(BeanDefinition<T> beanDefinition, String beanName, Constructor<?> ctor, Object[] args) throws BeansException {
+    public <T> T instantiate(BeanDefinition beanDefinition, String beanName, Constructor<?> ctor, Object[] args) throws BeansException {
 
         Class<?> clazz = beanDefinition.getBeanClass();
         try {
             if (null != ctor) {
                 Constructor<?> declaredConstructor = clazz.getDeclaredConstructor(ctor.getParameterTypes());
                 declaredConstructor.setAccessible(true);
-                return declaredConstructor.newInstance(args);
+                return (T) declaredConstructor.newInstance(args);
             } else {
-                return clazz.getDeclaredConstructor().newInstance();
+                return (T) clazz.getDeclaredConstructor().newInstance();
             }
         } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
             throw new BeansException("Failed to instantiate [" + clazz.getName() + "]", e);

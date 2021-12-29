@@ -16,15 +16,15 @@ public class ApiTest {
     public void test_BeanFactory(){
 
         // 初始化 BeanFactory
-        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+        DefaultListableBeanFactory<UserService> beanFactory = new DefaultListableBeanFactory<>();
         // 注册 bean
-        BeanDefinition<UserService> beanDefinition = new BeanDefinition<>(UserService.class);
+        BeanDefinition beanDefinition = new BeanDefinition(UserService.class);
         beanFactory.registerBeanDefinition("userService", beanDefinition);
         // 第一次获取 bean
-        UserService userService = beanFactory.getBean("userService","杰松");
-        userService.queryUserInfo();
+        UserService bean = beanFactory.getBean("userService", "杰松");
+        bean.queryUserInfo();
         // 第二次获取 bean
-        BeanDefinition<GoodsService> goodsServiceBeanDefinition = new BeanDefinition<>(GoodsService.class);
+        BeanDefinition goodsServiceBeanDefinition = new BeanDefinition(GoodsService.class);
         beanFactory.registerBeanDefinition("goodsService",goodsServiceBeanDefinition);
         GoodsService goodsService = beanFactory.getBean("goodsService");
         goodsService.buy();

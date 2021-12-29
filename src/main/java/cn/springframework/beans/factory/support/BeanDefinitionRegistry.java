@@ -4,5 +4,5 @@ import cn.springframework.beans.factory.config.BeanDefinition;
 
 public interface BeanDefinitionRegistry {
 
-    <T>void registerBeanDefinition(String beanName, BeanDefinition<T> beanDefinition);
+    void registerBeanDefinition(String beanName, BeanDefinition beanDefinition);
 }

@@ -5,19 +5,19 @@ package cn.springframework.beans.factory.config;
  * jackson
  * 2021年08月04日00:36:51
  */
-public class BeanDefinition<T> {
+public class BeanDefinition {
 
-    private Class<T> beanClass;
+    private Class beanClass;
 
-    public BeanDefinition(Class<T> beanClass){
+    public BeanDefinition(Class beanClass){
         this.beanClass = beanClass;
     }
 
-    public Class<T> getBeanClass() {
+    public Class getBeanClass() {
         return beanClass;
     }
 
-    public void setBeanClass(Class<T> beanClass) {
+    public void setBeanClass(Class beanClass) {
         this.beanClass = beanClass;
     }
 }

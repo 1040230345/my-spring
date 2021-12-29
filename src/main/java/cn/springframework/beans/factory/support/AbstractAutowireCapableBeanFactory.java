@@ -17,7 +17,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
     protected <T>T createBean(String beanName, BeanDefinition<T> beanDefinition,Object... arg) throws BeansException {
         T bean = null;
         try {
-            bean = createBeanInstance(beanDefinition,beanName,arg);
+            bean = (T) createBeanInstance(beanDefinition<T>,beanName,arg);
         } catch (Exception e) {
             throw new BeansException("Instantiation of bean failed", e);
         }
@@ -38,7 +38,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
                 break;
             }
         }
-        return (T) getInstantiationStrategy().instantiate(beanDefinition, beanName, constructorToUse, args);
+        return getInstantiationStrategy().instantiate(beanDefinition, beanName, constructorToUse, args);
     }
 
 
@@ -46,7 +46,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         return instantiationStrategy;
     }
 
-    public void setInstantiationStrategy(InstantiationStrategy instantiationStrategy) {
+    public void setInstantiationStrategy(InstantiationStrategy<T> instantiationStrategy) {
         this.instantiationStrategy = instantiationStrategy;
     }
 }
