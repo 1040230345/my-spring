@@ -9,7 +9,7 @@ import cn.springframework.beans.factory.config.BeanDefinition;
  * jackson
  * 2021年08月04日00:40:37
  */
-public abstract class AbstractBeanFactory<T> extends DefaultSingletonBeanRegistry<T>
+public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry
         implements BeanFactory {
 
     /**
@@ -18,7 +18,7 @@ public abstract class AbstractBeanFactory<T> extends DefaultSingletonBeanRegistr
      * @return
      */
     @Override
-    public T getBean(String name){
+    public <T>T getBean(String name){
        return doGetBean(name, null);
     }
 
@@ -29,24 +29,24 @@ public abstract class AbstractBeanFactory<T> extends DefaultSingletonBeanRegistr
      * @return
      */
     @Override
-    public T getBean(String name, Object... arg) {
+    public <T>T getBean(String name, Object... arg) {
         return doGetBean(name,arg);
     }
 
 
-    private T doGetBean(String name,Object[] arg){
+    private <T> T doGetBean(String name,Object[] arg){
 
-        T bean = getSingleton(name);
+        Object bean = getSingleton(name);
         if(bean != null){
-            return bean;
+            return (T) bean;
         }
 
-        BeanDefinition beanDefinition = getBeanDefinition(name);
+        BeanDefinition<T> beanDefinition = getBeanDefinition(name);
 
         return createBean(name,beanDefinition,arg);
     }
 
-    protected abstract BeanDefinition getBeanDefinition(String beanName) throws BeansException;
+    protected abstract <T>BeanDefinition<T> getBeanDefinition(String beanName) throws BeansException;
 
-    protected abstract T createBean(String beanName, BeanDefinition beanDefinition,Object... arg) throws BeansException;
+    protected abstract <T>T createBean(String beanName, BeanDefinition<T> beanDefinition,Object... arg) throws BeansException;
 }

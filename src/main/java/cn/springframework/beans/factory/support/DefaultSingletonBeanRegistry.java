@@ -9,16 +9,16 @@ import java.util.Map;
  * 默认单例bean注册
  * 2021年08月04日00:45:06
  */
-public class DefaultSingletonBeanRegistry<T> implements SingletonBeanRegistry<T> {
+public class DefaultSingletonBeanRegistry implements SingletonBeanRegistry {
 
-    private Map<String, T> singletonObjects = new HashMap<>();
+    private Map<String, Object> singletonObjects = new HashMap<>();
 
     @Override
-    public  T getSingleton(String beanName) {
-        return singletonObjects.get(beanName);
+    public <T> T getSingleton(String beanName) {
+        return (T) singletonObjects.get(beanName);
     }
 
-    protected void addSingleton(String beanName, T singletonObject) {
+    protected <T> void addSingleton(String beanName, T singletonObject) {
         singletonObjects.put(beanName, singletonObject);
     }
 }

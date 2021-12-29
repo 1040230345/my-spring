@@ -9,10 +9,10 @@ import java.lang.reflect.InvocationTargetException;
 /**
  * jdk实例方法
  */
-public class SimpleInstantiationStrategy<T> implements InstantiationStrategy<T>{
+public class SimpleInstantiationStrategy implements InstantiationStrategy{
 
     @Override
-    public Object instantiate(BeanDefinition beanDefinition, String beanName, Constructor<?> ctor, Object[] args) throws BeansException {
+    public <T> Object instantiate(BeanDefinition<T> beanDefinition, String beanName, Constructor<?> ctor, Object[] args) throws BeansException {
 
         Class<?> clazz = beanDefinition.getBeanClass();
         try {

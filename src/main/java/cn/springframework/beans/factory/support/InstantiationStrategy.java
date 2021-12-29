@@ -8,7 +8,7 @@ import java.lang.reflect.Constructor;
 /**
  * bean实例方法
  */
-public interface InstantiationStrategy<T> {
+public interface InstantiationStrategy {
 
     /**
      * bean实例方法
@@ -19,6 +19,6 @@ public interface InstantiationStrategy<T> {
      * @return
      * @throws BeansException
      */
-    Object instantiate(BeanDefinition beanDefinition, String beanName, Constructor<?>
+    <T> Object instantiate(BeanDefinition<T> beanDefinition, String beanName, Constructor<?>
             ctor, Object[] args) throws BeansException;
 }

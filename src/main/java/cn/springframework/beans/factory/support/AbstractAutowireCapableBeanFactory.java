@@ -9,15 +9,15 @@ import java.lang.reflect.InvocationTargetException;
 /**
  * 抽象自动装配bean工厂
  */
-public abstract class AbstractAutowireCapableBeanFactory<T> extends AbstractBeanFactory<T>{
+public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFactory{
 
-    private InstantiationStrategy<T> instantiationStrategy = new SimpleInstantiationStrategy<T>();
+    private InstantiationStrategy instantiationStrategy = new SimpleInstantiationStrategy();
 
     @Override
-    protected T createBean(String beanName, BeanDefinition beanDefinition,Object... arg) throws BeansException {
+    protected <T>T createBean(String beanName, BeanDefinition<T> beanDefinition,Object... arg) throws BeansException {
         T bean = null;
         try {
-            bean = (T) createBeanInstance(beanDefinition,beanName,arg);
+            bean = createBeanInstance(beanDefinition,beanName,arg);
         } catch (Exception e) {
             throw new BeansException("Instantiation of bean failed", e);
         }
@@ -27,7 +27,7 @@ public abstract class AbstractAutowireCapableBeanFactory<T> extends AbstractBean
         return bean;
     }
 
-    protected Object createBeanInstance(BeanDefinition beanDefinition, String beanName, Object[] args) {
+    protected <T>T createBeanInstance(BeanDefinition<T> beanDefinition, String beanName, Object[] args) {
         Constructor<T> constructorToUse = null;
         Class<?> beanClass = beanDefinition.getBeanClass();
         Constructor<?>[] declaredConstructors = beanClass.getDeclaredConstructors();
@@ -38,7 +38,7 @@ public abstract class AbstractAutowireCapableBeanFactory<T> extends AbstractBean
                 break;
             }
         }
-        return getInstantiationStrategy().instantiate(beanDefinition, beanName, constructorToUse, args);
+        return (T) getInstantiationStrategy().instantiate(beanDefinition, beanName, constructorToUse, args);
     }
 
 
@@ -46,7 +46,7 @@ public abstract class AbstractAutowireCapableBeanFactory<T> extends AbstractBean
         return instantiationStrategy;
     }
 
-    public void setInstantiationStrategy(InstantiationStrategy<T> instantiationStrategy) {
+    public void setInstantiationStrategy(InstantiationStrategy instantiationStrategy) {
         this.instantiationStrategy = instantiationStrategy;
     }
 }
