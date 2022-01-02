@@ -6,7 +6,7 @@ import cn.springframework.beans.factory.config.BeanDefinition;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DefaultListableBeanFactory<T> extends AbstractAutowireCapableBeanFactory<T>
+public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFactory
         implements BeanDefinitionRegistry {
 
     private Map<String, BeanDefinition> beanDefinitionMap = new HashMap<>();

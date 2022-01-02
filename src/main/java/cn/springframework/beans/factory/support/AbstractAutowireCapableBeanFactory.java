@@ -14,10 +14,10 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
     private InstantiationStrategy instantiationStrategy = new SimpleInstantiationStrategy();
 
     @Override
-    protected <T>T createBean(String beanName, BeanDefinition<T> beanDefinition,Object... arg) throws BeansException {
-        T bean = null;
+    protected Object createBean(String beanName, BeanDefinition beanDefinition,Object... arg) throws BeansException {
+        Object bean = null;
         try {
-            bean = (T) createBeanInstance(beanDefinition<T>,beanName,arg);
+            bean = createBeanInstance(beanDefinition,beanName,arg);
         } catch (Exception e) {
             throw new BeansException("Instantiation of bean failed", e);
         }
@@ -27,14 +27,14 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         return bean;
     }
 
-    protected <T>T createBeanInstance(BeanDefinition<T> beanDefinition, String beanName, Object[] args) {
-        Constructor<T> constructorToUse = null;
+    protected Object createBeanInstance(BeanDefinition beanDefinition, String beanName, Object[] args) {
+        Constructor constructorToUse = null;
         Class<?> beanClass = beanDefinition.getBeanClass();
         Constructor<?>[] declaredConstructors = beanClass.getDeclaredConstructors();
         for (Constructor<?> ctor : declaredConstructors) {
             //简单判断下参数个数是否一致
             if (null != args && ctor.getParameterTypes().length == args.length) {
-                constructorToUse = (Constructor<T>) ctor;
+                constructorToUse = ctor;
                 break;
             }
         }
@@ -46,7 +46,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         return instantiationStrategy;
     }
 
-    public void setInstantiationStrategy(InstantiationStrategy<T> instantiationStrategy) {
+    public void setInstantiationStrategy(InstantiationStrategy instantiationStrategy) {
         this.instantiationStrategy = instantiationStrategy;
     }
 }

@@ -14,8 +14,8 @@ public class DefaultSingletonBeanRegistry implements SingletonBeanRegistry {
     private Map<String, Object> singletonObjects = new HashMap<>();
 
     @Override
-    public <T> T getSingleton(String beanName) {
-        return (T) singletonObjects.get(beanName);
+    public Object getSingleton(String beanName) {
+        return singletonObjects.get(beanName);
     }
 
     protected void addSingleton(String beanName, Object singletonObject) {

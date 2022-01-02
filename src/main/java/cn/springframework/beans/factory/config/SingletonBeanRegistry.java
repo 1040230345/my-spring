@@ -6,5 +6,5 @@ package cn.springframework.beans.factory.config;
  */
 public interface SingletonBeanRegistry {
 
-    <T> T getSingleton(String beanName);
+    Object getSingleton(String beanName);
 }
