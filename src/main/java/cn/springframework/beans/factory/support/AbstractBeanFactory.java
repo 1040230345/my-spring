@@ -1,6 +1,6 @@
 package cn.springframework.beans.factory.support;
 
-import cn.springframework.BeanFactory;
+import cn.springframework.beans.factory.BeanFactory;
 import cn.springframework.beans.BeansException;
 import cn.springframework.beans.factory.config.BeanDefinition;
 
@@ -48,5 +48,5 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry
 
     protected abstract BeanDefinition getBeanDefinition(String beanName) throws BeansException;
 
-    protected abstract <T>T createBean(String beanName, BeanDefinition beanDefinition,Object... arg) throws BeansException;
+    protected abstract Object createBean(String beanName, BeanDefinition beanDefinition,Object... arg) throws BeansException;
 }

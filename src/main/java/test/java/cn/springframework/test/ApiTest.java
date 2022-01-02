@@ -1,7 +1,10 @@
 package test.java.cn.springframework.test;
 
 
+import cn.springframework.beans.PropertyValue;
+import cn.springframework.beans.PropertyValues;
 import cn.springframework.beans.factory.config.BeanDefinition;
+import cn.springframework.beans.factory.config.BeanReference;
 import cn.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.junit.Test;
 import test.java.cn.springframework.test.bean.GoodsService;
@@ -17,17 +20,20 @@ public class ApiTest {
 
         // 初始化 BeanFactory
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+
+        beanFactory.registerBeanDefinition("goodsService", new BeanDefinition(GoodsService.class));
+
+        PropertyValues propertyValues = new PropertyValues();
+        propertyValues.addPropertyValue(new PropertyValue("goodsService",new BeanReference("goodsService")));
+
         // 注册 bean
-        BeanDefinition beanDefinition = new BeanDefinition(UserService.class);
+        BeanDefinition beanDefinition = new BeanDefinition(UserService.class,propertyValues);
         beanFactory.registerBeanDefinition("userService", beanDefinition);
         // 第一次获取 bean
         UserService bean = (UserService) beanFactory.getBean("userService", "杰松");
         bean.queryUserInfo();
-        // 第二次获取 bean
-        BeanDefinition goodsServiceBeanDefinition = new BeanDefinition(GoodsService.class);
-        beanFactory.registerBeanDefinition("goodsService",goodsServiceBeanDefinition);
-        GoodsService goodsService = (GoodsService) beanFactory.getBean("goodsService");
-        goodsService.buy();
+        bean.getGoodsService().buy();
+
 
     }
 

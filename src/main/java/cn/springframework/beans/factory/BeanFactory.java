@@ -1,4 +1,4 @@
-package cn.springframework;
+package cn.springframework.beans.factory;
 
 /**
  * bean工厂

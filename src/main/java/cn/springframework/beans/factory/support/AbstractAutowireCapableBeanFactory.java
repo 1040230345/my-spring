@@ -1,10 +1,13 @@
 package cn.springframework.beans.factory.support;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.springframework.beans.BeansException;
+import cn.springframework.beans.PropertyValue;
+import cn.springframework.beans.PropertyValues;
 import cn.springframework.beans.factory.config.BeanDefinition;
+import cn.springframework.beans.factory.config.BeanReference;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * 抽象自动装配bean工厂
@@ -17,7 +20,10 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
     protected Object createBean(String beanName, BeanDefinition beanDefinition,Object... arg) throws BeansException {
         Object bean = null;
         try {
+            //实例化bean
             bean = createBeanInstance(beanDefinition,beanName,arg);
+            //注入属性
+            applyPropertyValues(beanName,bean,beanDefinition);
         } catch (Exception e) {
             throw new BeansException("Instantiation of bean failed", e);
         }
@@ -27,6 +33,13 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         return bean;
     }
 
+    /**
+     * 创建bean--判断是否有有参，并创建有参的构造方法
+     * @param beanDefinition
+     * @param beanName
+     * @param args
+     * @return
+     */
     protected Object createBeanInstance(BeanDefinition beanDefinition, String beanName, Object[] args) {
         Constructor constructorToUse = null;
         Class<?> beanClass = beanDefinition.getBeanClass();
@@ -40,6 +53,28 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         }
         return getInstantiationStrategy().instantiate(beanDefinition, beanName, constructorToUse, args);
     }
+
+    /**
+     * Bean 属性填充
+     */
+    protected void applyPropertyValues(String beanName, Object bean, BeanDefinition
+            beanDefinition) {
+        try {
+            PropertyValues propertyValues = beanDefinition.getPropertyValues();
+            for (PropertyValue propertyValue : propertyValues.getPropertyValues())
+            {
+                String name = propertyValue.getName();
+                Object value = propertyValue.getValue();
+                if (value instanceof BeanReference) {
+                    // A 依赖 B，获取 B 的实例化
+                    BeanReference beanReference = (BeanReference) value;
+                    value = getBean(beanReference.getBeanName());
+                }
+                // 属性填充
+                BeanUtil.setFieldValue(bean, name, value);
+            } } catch (Exception e) {
+            throw new BeansException("Error setting property values：" + beanName);
+        } }
 
 
     public InstantiationStrategy getInstantiationStrategy() {
