@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<beans>
+    <bean id="GoodsService" class="test.java.cn.springframework.test.bean.GoodsService"/>
+    <bean id="UserService" class="test.java.cn.springframework.test.bean.UserService">
+        <property name="name" value="章杰松"/>
+        <property name="goodsService" ref="GoodsService"/>
+    </bean>
+</beans>

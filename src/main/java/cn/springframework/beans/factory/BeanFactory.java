@@ -14,6 +14,6 @@ public interface BeanFactory {
     Object getBean(String name,Object... arg);
 
     //根据bean类型获取
-//    <T> T getBean(String name, Class<T> requiredType);
+    <T> T getBean(String name, Class<T> requiredType);
 
 }

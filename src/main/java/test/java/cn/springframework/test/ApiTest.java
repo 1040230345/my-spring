@@ -6,6 +6,9 @@ import cn.springframework.beans.PropertyValues;
 import cn.springframework.beans.factory.config.BeanDefinition;
 import cn.springframework.beans.factory.config.BeanReference;
 import cn.springframework.beans.factory.support.DefaultListableBeanFactory;
+import cn.springframework.beans.factory.xml.XmlBeanDefinitionReader;
+import cn.springframework.io.DefaultResourceLoader;
+import org.junit.Before;
 import org.junit.Test;
 import test.java.cn.springframework.test.bean.GoodsService;
 import test.java.cn.springframework.test.bean.UserService;
@@ -36,6 +39,25 @@ public class ApiTest {
         bean.getGoodsService().buy();
 
 
+    }
+
+//    private DefaultResourceLoader resourceLoader;
+//
+//    @Before
+//    public void init() {
+//        resourceLoader = new DefaultResourceLoader();
+//    }
+
+    @Test
+    public void test_xml() {
+        // 1.初始化 BeanFactory
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+        // 2. 读取配置文件&注册 Bean
+        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
+        reader.loadBeanDefinitions("classpath:spring.xml");
+        // 3. 获取 Bean 对象调用方法
+        UserService userService = beanFactory.getBean("UserService", UserService.class);
+        userService.queryUserInfo();
     }
 
 }
