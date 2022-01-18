@@ -25,12 +25,13 @@ public class ApiTest {
 
         PropertyValues propertyValues = new PropertyValues();
         propertyValues.addPropertyValue(new PropertyValue("goodsService",new BeanReference("goodsService")));
+        propertyValues.addPropertyValue(new PropertyValue("name","杰松"));
 
         // 注册 bean
         BeanDefinition beanDefinition = new BeanDefinition(UserService.class,propertyValues);
         beanFactory.registerBeanDefinition("userService", beanDefinition);
         // 第一次获取 bean
-        UserService bean = (UserService) beanFactory.getBean("userService", "杰松");
+        UserService bean = (UserService) beanFactory.getBean("userService");
         bean.queryUserInfo();
         bean.getGoodsService().buy();
 

@@ -10,9 +10,9 @@ public class UserService {
         System.out.println(name+":查询用户信息");
     }
 
-    UserService(String name){
-        this.name = name;
-    }
+//    UserService(String name){
+//        this.name = name;
+//    }
 
     public GoodsService getGoodsService() {
         return goodsService;

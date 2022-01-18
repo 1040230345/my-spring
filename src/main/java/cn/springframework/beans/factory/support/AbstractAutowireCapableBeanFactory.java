@@ -57,12 +57,10 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
     /**
      * Bean 属性填充
      */
-    protected void applyPropertyValues(String beanName, Object bean, BeanDefinition
-            beanDefinition) {
+    protected void applyPropertyValues(String beanName, Object bean, BeanDefinition beanDefinition) {
         try {
             PropertyValues propertyValues = beanDefinition.getPropertyValues();
-            for (PropertyValue propertyValue : propertyValues.getPropertyValues())
-            {
+            for (PropertyValue propertyValue : propertyValues.getPropertyValues()) {
                 String name = propertyValue.getName();
                 Object value = propertyValue.getValue();
                 if (value instanceof BeanReference) {
@@ -72,9 +70,11 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
                 }
                 // 属性填充
                 BeanUtil.setFieldValue(bean, name, value);
-            } } catch (Exception e) {
+            }
+        } catch (Exception e) {
             throw new BeansException("Error setting property values：" + beanName);
-        } }
+        }
+    }
 
 
     public InstantiationStrategy getInstantiationStrategy() {
